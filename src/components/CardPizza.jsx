@@ -1,22 +1,33 @@
+import PropTypes from "prop-types";
 import { formatCurrency } from "../utils/formatCurrency";
 
-const CardPizza = (props) => {
+const CardPizza = ({ name, price, img, ingredients = [] }) => {
   return (
-    // eslint-disable-next-line react/prop-types
-    <div style={{width: '30%', margin: '10px', padding: '10px'}}>
-      <img src={props.img} alt="Imagen de Pizza" />
-      <h3>{props.name}</h3>
-      <p>🧀 Ingredientes:</p>
-      <ul style={{ listStyleType: "none", padding: 0 }}>
-        {props.ingredients.map((ingredient, index) => (
-          <li key={index}>{ingredient}</li>
-        ))}
-      </ul>
-      <h4>Precio: {formatCurrency(props.price)}</h4>
-      <button>Ver Más</button>
-      <button>Añadir</button>
+    <div className="card" style={{ maxWidth: 480, margin: "12px auto" }}>
+      <img src={img} alt={name} style={{ width: "100%", height: "auto" }} />
+      <div className="card-body">
+        <h3 className="card-title" style={{ marginBottom: 8 }}>{name}</h3>
+        <p style={{ margin: 0, fontWeight: 600 }}>Ingredientes:</p>
+        <ul style={{ marginTop: 6 }}>
+          {ingredients.map((ing, i) => (
+            <li key={i}>{ing}</li>
+          ))}
+        </ul>
+        <h4 style={{ marginTop: 8 }}>Precio: ${formatCurrency(price)}</h4>
+        <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+          <button type="button">Ver más</button>
+          <button type="button">Añadir</button>
+        </div>
+      </div>
     </div>
   );
+};
+
+CardPizza.propTypes = {
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  img: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default CardPizza;
